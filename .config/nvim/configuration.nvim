@@ -1,0 +1,25 @@
+local dap = require('dap')
+
+dap.adapters.ruby = {
+  type = 'executable',
+  command = 'bundle',
+  args = {'exec', 'rdebug-ide', '--host', '0.0.0.0', '--port', '1234', '--', '${relativeFile}:${line}'},
+}
+
+dap.configurations.ruby = {
+  {
+    type = 'ruby',
+    request = 'launch',
+    name = 'Rails server',
+    program = 'bundle',
+    programArgs = {'exec', 'rails', 'server'},
+    cwd = '${workspaceFolder}',
+    sourceMap = true,
+    protocol = 'vscode',
+    host = '127.0.0.1',
+    port = 1234,
+    stopOnEntry = true,
+    ignore = {'-*/vendor/**'},
+  },
+}
+
